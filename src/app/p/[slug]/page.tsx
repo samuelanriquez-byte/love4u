@@ -13,9 +13,33 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!data) return { title: 'Love4U' }
 
+  const title = `💕 ${data.person_name} te tiene un regalo especial`
+  const description = `Abrí para ver el regalo que ${data.person_name} preparó para vos. Solo para vos. 💌`
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
+
   return {
-    title: `💕 Un regalo especial de ${data.person_name} para ${data.partner_name}`,
-    description: `${data.person_name} te preparó algo muy especial. Abrí para verlo. 💌`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: `${baseUrl}/p/${slug}`,
+      images: [
+        {
+          url: `${baseUrl}/og-love.png`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${baseUrl}/og-love.png`],
+    },
   }
 }
 
