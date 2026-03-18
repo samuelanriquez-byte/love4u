@@ -9,7 +9,11 @@ const demoPage: LovePage = {
   partner_name: 'Valentina',
   start_date: '2022-02-14',
   message: 'Desde el primer día que te vi supe que algo especial estaba pasando. Gracias por llenar mi vida de risas, de abrazos y de momentos que no cambiaría por nada. Sos mi lugar favorito en el mundo. Te amo hoy, mañana y siempre. 💕',
-  photos: [],
+  photos: [
+    'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=80',
+    'https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=800&q=80',
+    'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=800&q=80',
+  ],
   playlist_url: '',
   date_ideas: [],
   active: true,
