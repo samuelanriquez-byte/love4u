@@ -22,7 +22,7 @@ const planBadge = {
 
 export default function Pricing() {
   return (
-    <section id="planes" className="py-24 px-4">
+    <section id="planes" className="py-16 md:py-24 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
@@ -33,7 +33,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8">
           {(Object.entries(PLANS) as [keyof typeof PLANS, typeof PLANS[keyof typeof PLANS]][]).map(([key, plan]) => (
             <div
               key={key}
