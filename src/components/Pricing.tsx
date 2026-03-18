@@ -26,7 +26,7 @@ export default function Pricing() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Elige tu <span className="gradient-text">plan de amor</span>
+            Elige tu <span className="gradient-text">regalo perfecto</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Desde un gesto simple hasta la experiencia más completa. Todos incluyen una página única con QR para compartir.

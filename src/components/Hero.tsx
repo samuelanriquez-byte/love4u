@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 function PhoneMockup() {
   return (
-    <div className="relative flex justify-center items-center" style={{ paddingTop: '20px', paddingBottom: '40px', paddingRight: '16px' }}>
+    <div className="relative flex justify-center items-center" style={{ paddingTop: '48px', paddingBottom: '48px', paddingLeft: '24px', paddingRight: '24px' }}>
       {/* Glow detrás del teléfono */}
       <div
         className="absolute rounded-full blur-3xl opacity-25 pointer-events-none"
@@ -163,7 +163,7 @@ function PhoneMockup() {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Fondo decorativo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 text-6xl opacity-10 float" style={{ animationDelay: '0s' }}>💕</div>
@@ -174,8 +174,8 @@ export default function Hero() {
         <div className="absolute top-1/3 right-5 text-3xl opacity-10 float" style={{ animationDelay: '0.8s' }}>💫</div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
 
           {/* Columna izquierda */}
           <div className="flex-1 text-center lg:text-left max-w-xl">
@@ -207,7 +207,7 @@ export default function Hero() {
                 href="#planes"
                 className="border-2 border-pink-400 text-pink-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-pink-50 transition-all"
               >
-                Ver planes
+                Ver precios
               </Link>
             </div>
 

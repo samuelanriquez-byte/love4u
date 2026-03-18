@@ -10,7 +10,7 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center gap-6">
           <Link href="#planes" className="text-gray-600 hover:text-pink-500 transition-colors text-sm font-medium">
-            Planes
+            Precios
           </Link>
           <Link href="/#como-funciona" className="text-gray-600 hover:text-pink-500 transition-colors text-sm font-medium">
             Cómo funciona
