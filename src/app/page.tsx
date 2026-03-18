@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
+import Showcase from '@/components/Showcase'
 import Pricing from '@/components/Pricing'
 import HowItWorks from '@/components/HowItWorks'
 import FAQ from '@/components/FAQ'
@@ -10,6 +11,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <Showcase />
       <HowItWorks />
       <Pricing />
       <FAQ />

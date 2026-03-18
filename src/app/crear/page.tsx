@@ -2,7 +2,7 @@
 import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PLANS } from '@/lib/plans'
-import { Upload, Music, Heart } from 'lucide-react'
+import { Upload, Music, Heart, Eye, EyeOff } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
 const USDT_WALLET = '0x839078eF6505dE73b7593C48a5C11AF59D57146A'
@@ -17,6 +17,7 @@ function CrearForm() {
   const initialPlan = (searchParams.get('plan') as PlanKey) || 'basic'
 
   const [step, setStep] = useState(1)
+  const [showPreview, setShowPreview] = useState(false)
   const [loading, setLoading] = useState(false)
   const [payMethod, setPayMethod] = useState<'paypal' | 'usdt'>('paypal')
   const [paid, setPaid] = useState(false)
@@ -245,6 +246,63 @@ function CrearForm() {
                 ¡Casi listo! 🎁
               </h2>
 
+              {/* Botón preview */}
+              <button
+                onClick={() => setShowPreview(v => !v)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-pink-200 text-pink-500 text-sm font-semibold hover:bg-pink-50 transition-all"
+              >
+                {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPreview ? 'Ocultar preview' : '👁 Ver cómo queda la página'}
+              </button>
+
+              {/* Mini preview de la love page */}
+              {showPreview && (
+                <div
+                  className="rounded-2xl overflow-hidden"
+                  style={{ background: 'linear-gradient(160deg, #0d0010 0%, #2a001a 50%, #1a000d 100%)', border: '1px solid rgba(255,255,255,0.1)' }}
+                >
+                  <div className="p-5 text-center">
+                    <div className="text-4xl mb-3">💝</div>
+                    <p className="text-pink-400 mb-1" style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase' }}>Un regalo de</p>
+                    <p className="text-white font-bold text-xl mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+                      {form.person_name || 'Tu nombre'}
+                    </p>
+                    <p className="text-pink-400 mb-1" style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase' }}>para</p>
+                    <p className="font-bold text-lg mb-4" style={{ fontFamily: 'var(--font-playfair)', color: '#ff6b9d' }}>
+                      {form.partner_name || 'Su nombre'}
+                    </p>
+
+                    {form.start_date && (
+                      <div className="rounded-xl p-3 mb-4 text-center" style={{ background: 'rgba(255,255,255,0.07)' }}>
+                        <p className="text-pink-400 text-xs mb-2">
+                          💕 Juntos desde el {new Date(form.start_date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </p>
+                        <p className="text-white font-bold text-2xl" style={{ fontFamily: 'var(--font-playfair)' }}>
+                          {Math.floor((Date.now() - new Date(form.start_date).getTime()) / 86400000).toLocaleString('es-AR')}
+                        </p>
+                        <p className="text-pink-400 text-xs">días juntos</p>
+                      </div>
+                    )}
+
+                    {form.photosPreviews.length > 0 && (
+                      <div className="rounded-xl overflow-hidden mb-4" style={{ height: '120px' }}>
+                        <img src={form.photosPreviews[0]} alt="" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+
+                    {form.message && (
+                      <div className="rounded-xl p-4 text-left" style={{ background: 'rgba(255,255,255,0.07)' }}>
+                        <p className="text-pink-400 mb-2" style={{ fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase' }}>💌 Mensaje especial</p>
+                        <p className="text-white italic text-sm leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
+                          &ldquo;{form.message}&rdquo;
+                        </p>
+                        <p className="text-pink-400 text-right text-xs mt-2">— {form.person_name} 💕</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">Tu email</label>
                 <input
@@ -345,6 +403,22 @@ function CrearForm() {
                   >
                     📲 Enviar comprobante por WhatsApp
                   </a>
+                </div>
+              )}
+
+              {/* Trust badges */}
+              {!paid && (
+                <div className="flex items-center justify-center gap-4 flex-wrap">
+                  {[
+                    { icon: '⚡', text: 'Lista en 5 min' },
+                    { icon: '🔒', text: 'Pago seguro' },
+                    { icon: '💕', text: '+10.000 parejas' },
+                  ].map(b => (
+                    <div key={b.text} className="flex items-center gap-1.5 text-xs text-gray-500">
+                      <span>{b.icon}</span>
+                      <span>{b.text}</span>
+                    </div>
+                  ))}
                 </div>
               )}
 

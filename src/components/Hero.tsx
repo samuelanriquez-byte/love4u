@@ -214,7 +214,7 @@ export default function Hero() {
             {/* Estadísticas */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 text-center mb-10">
               <div>
-                <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>+100</p>
+                <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>+10.000</p>
                 <p className="text-sm text-gray-500">parejas felices</p>
               </div>
               <div>
