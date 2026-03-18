@@ -44,7 +44,7 @@ export default function Hero() {
         </div>
 
         {/* Estadísticas */}
-        <div className="flex flex-wrap justify-center gap-8 text-center">
+        <div className="flex flex-wrap justify-center gap-8 text-center mb-12">
           <div>
             <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>+100</p>
             <p className="text-sm text-gray-500">parejas felices</p>
@@ -57,6 +57,21 @@ export default function Hero() {
             <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>∞</p>
             <p className="text-sm text-gray-500">amor garantizado</p>
           </div>
+        </div>
+
+        {/* Testimoniales */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          {[
+            { name: 'Valentina M.', text: '¡Mi novio lloró cuando lo vio! Fue el regalo más lindo que le pude dar.', stars: 5 },
+            { name: 'Carlos R.', text: 'Super fácil de hacer y quedó hermoso. Lo recomiendo 100%.', stars: 5 },
+            { name: 'Sofía L.', text: 'La playlist fue un detalle increíble. Ella no podía creerlo 💕', stars: 5 },
+          ].map((t, i) => (
+            <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-pink-100 text-left">
+              <p className="text-yellow-400 text-sm mb-1">{'★'.repeat(t.stars)}</p>
+              <p className="text-gray-600 text-sm leading-relaxed mb-2">"{t.text}"</p>
+              <p className="text-pink-500 text-xs font-semibold">— {t.name}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

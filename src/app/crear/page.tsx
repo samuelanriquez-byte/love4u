@@ -143,7 +143,7 @@ function CrearForm() {
                     value={form.person_name}
                     onChange={handleChange}
                     placeholder="Ej: Juan"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 transition-colors"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                   />
                 </div>
                 <div>
@@ -153,7 +153,7 @@ function CrearForm() {
                     value={form.partner_name}
                     onChange={handleChange}
                     placeholder="Ej: María"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 transition-colors"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                   />
                 </div>
               </div>
@@ -166,7 +166,7 @@ function CrearForm() {
                   name="start_date"
                   value={form.start_date}
                   onChange={handleChange}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 transition-colors"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                 />
               </div>
 
@@ -223,7 +223,7 @@ function CrearForm() {
                     value={form.playlist_url}
                     onChange={handleChange}
                     placeholder="https://open.spotify.com/playlist/..."
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 transition-colors"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                   />
                 </div>
               )}
@@ -253,7 +253,7 @@ function CrearForm() {
                   value={form.customer_email}
                   onChange={handleChange}
                   placeholder="tu@email.com"
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 transition-colors"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                 />
                 <p className="text-xs text-gray-400 mt-1">Aquí recibirás el link y el QR de la página.</p>
               </div>

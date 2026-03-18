@@ -29,11 +29,11 @@ const faqs = [
   },
   {
     question: '¿Los pagos son seguros?',
-    answer: 'Sí, usamos Stripe, la plataforma de pagos más segura del mundo. Nunca almacenamos datos de tu tarjeta.',
+    answer: 'Sí. Usamos PayPal, una de las plataformas de pago más seguras del mundo. También aceptamos USDT (criptomoneda) vía BNB Smart Chain.',
   },
   {
     question: '¿Qué formas de pago aceptan?',
-    answer: 'Tarjetas de crédito y débito (Visa, Mastercard, AmEx) a través de Stripe. Próximamente más opciones.',
+    answer: 'Aceptamos PayPal (con tarjeta o saldo PayPal) y USDT en red BNB Smart Chain (BEP20). Ambos métodos son rápidos y seguros.',
   },
 ]
 

@@ -66,29 +66,52 @@ function GraciasContent() {
           Revisá tu carpeta de spam si no lo recibís en 5 minutos.
         </p>
 
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-pink-100 mb-8">
-          <h3 className="font-bold text-gray-700 mb-3">¿Qué sigue?</h3>
-          <div className="space-y-3 text-left">
-            <div className="flex items-center gap-3">
+        <div className="bg-white rounded-3xl p-6 shadow-sm border border-pink-100 mb-6">
+          <h3 className="font-bold text-gray-700 mb-4">¿Qué sigue?</h3>
+          <div className="space-y-4 text-left">
+            <div className="flex items-start gap-3">
               <span className="text-2xl">📧</span>
-              <p className="text-gray-600 text-sm">Revisá tu email para encontrar el link y QR de la página.</p>
+              <div>
+                <p className="text-gray-700 text-sm font-medium">Revisá tu email</p>
+                <p className="text-gray-400 text-xs">Enviamos el link y el QR exclusivo a tu casilla.</p>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <span className="text-2xl">📱</span>
-              <p className="text-gray-600 text-sm">Imprimí el QR o envialo por WhatsApp para sorprender a tu amor.</p>
+              <div>
+                <p className="text-gray-700 text-sm font-medium">Compartí el QR</p>
+                <p className="text-gray-400 text-xs">Imprimilo o envialo por WhatsApp para sorprender a tu amor.</p>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <span className="text-2xl">💕</span>
-              <p className="text-gray-600 text-sm">¡Disfrutá la reacción de tu pareja!</p>
+              <div>
+                <p className="text-gray-700 text-sm font-medium">¡Disfrutá el momento!</p>
+                <p className="text-gray-400 text-xs">Ver la reacción de tu pareja no tiene precio.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <Link
-          href="/"
-          className="border-2 border-pink-400 text-pink-500 px-8 py-3 rounded-full font-semibold hover:bg-pink-50 transition-all"
-        >
-          Volver al inicio
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+          <a
+            href="https://wa.me/?text=Mirá el regalo que te hice 💕"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold text-sm hover:opacity-90 transition-all"
+          >
+            📲 Compartir por WhatsApp
+          </a>
+          <Link
+            href="/crear"
+            className="border-2 border-pink-400 text-pink-500 px-6 py-3 rounded-full font-semibold text-sm hover:bg-pink-50 transition-all"
+          >
+            Crear otro regalo
+          </Link>
+        </div>
+
+        <Link href="/" className="text-sm text-gray-400 hover:text-pink-400 transition-colors">
+          ← Volver al inicio
         </Link>
       </div>
     </div>
