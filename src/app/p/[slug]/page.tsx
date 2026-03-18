@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `${baseUrl}/p/${slug}`,
       images: [
         {
-          url: `${baseUrl}/og-love.png`,
+          url: `${baseUrl}/api/og?from=${encodeURIComponent(data.person_name)}&to=${encodeURIComponent(data.partner_name)}`,
           width: 1200,
           height: 630,
           alt: title,
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title,
       description,
-      images: [`${baseUrl}/og-love.png`],
+      images: [`${baseUrl}/api/og?from=${encodeURIComponent(data.person_name)}&to=${encodeURIComponent(data.partner_name)}`],
     },
   }
 }

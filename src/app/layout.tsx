@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: 'https://love4u-three.vercel.app',
     images: [
       {
-        url: 'https://love4u-three.vercel.app/og-love.png',
+        url: 'https://love4u-three.vercel.app/api/og',
         width: 1200,
         height: 630,
         alt: 'Love4U — Regalos digitales para enamorados',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Love4U — Regalos digitales para enamorados',
     description: 'El regalo más especial que puedes darle a tu pareja.',
-    images: ['https://love4u-three.vercel.app/og-love.png'],
+    images: ['https://love4u-three.vercel.app/api/og'],
   },
 }
 
