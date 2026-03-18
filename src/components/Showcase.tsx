@@ -5,8 +5,10 @@ const examples = [
     date: '14 Feb 2022',
     days: 762,
     message: 'Desde el primer día supe que eras vos. Gracias por hacer de cada momento algo mágico.',
-    color: 'from-[#2a001a] to-[#0d0010]',
+    bg: 'linear-gradient(160deg, #0d0010 0%, #2a001a 50%, #1a000d 100%)',
     accent: '#ff6b9d',
+    glow: 'rgba(233,30,140,0.35)',
+    rotate: '-2deg',
   },
   {
     from: 'Agustín',
@@ -14,85 +16,126 @@ const examples = [
     date: '20 Sep 2021',
     days: 908,
     message: 'Sos mi lugar favorito en el mundo. Te amo más que ayer y menos que mañana. 💕',
-    color: 'from-[#001a2a] to-[#000d1a]',
+    bg: 'linear-gradient(160deg, #00101a 0%, #001e2e 50%, #000d1a 100%)',
     accent: '#6bb5ff',
+    glow: 'rgba(107,181,255,0.25)',
+    rotate: '0deg',
   },
   {
     from: 'Nicolás',
     to: 'Valentina',
     date: '1 Mar 2023',
     days: 382,
-    message: 'No necesito el mundo entero, con tenerte a vos me alcanza y me sobra.',
-    color: 'from-[#1a001a] to-[#0d000d]',
+    message: 'No necesito el mundo entero, con tenerte a vos me alcanza y me sobra. 🌹',
+    bg: 'linear-gradient(160deg, #0d000d 0%, #1e0028 50%, #0d000d 100%)',
     accent: '#c96bff',
+    glow: 'rgba(201,107,255,0.25)',
+    rotate: '2deg',
   },
 ]
 
-function MiniLovePage({ ex }: { ex: typeof examples[0] }) {
+function ShowcaseCard({ ex, index }: { ex: typeof examples[0]; index: number }) {
   return (
     <div
-      className="rounded-3xl overflow-hidden flex-shrink-0 w-72 shadow-xl border border-white/10 hover:scale-[1.02] transition-transform duration-300"
-      style={{ background: `linear-gradient(160deg, ${ex.color.replace('from-', '').replace(' to-', ', ')})` }}
+      style={{
+        flex: '0 0 280px',
+        borderRadius: '28px',
+        background: ex.bg,
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: `0 24px 64px ${ex.glow}, 0 4px 16px rgba(0,0,0,0.4)`,
+        transform: `rotate(${ex.rotate})`,
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+      onMouseEnter={e => {
+        ;(e.currentTarget as HTMLElement).style.transform = 'rotate(0deg) scale(1.03)'
+        ;(e.currentTarget as HTMLElement).style.boxShadow = `0 32px 80px ${ex.glow}, 0 8px 24px rgba(0,0,0,0.5)`
+      }}
+      onMouseLeave={e => {
+        ;(e.currentTarget as HTMLElement).style.transform = `rotate(${ex.rotate})`
+        ;(e.currentTarget as HTMLElement).style.boxShadow = `0 24px 64px ${ex.glow}, 0 4px 16px rgba(0,0,0,0.4)`
+      }}
     >
-      <div className="p-6">
+      {/* Glow interno */}
+      <div style={{
+        position: 'absolute',
+        top: '-60px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '200px',
+        height: '200px',
+        borderRadius: '50%',
+        background: `radial-gradient(circle, ${ex.glow} 0%, transparent 70%)`,
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ padding: '28px 24px', position: 'relative', zIndex: 1 }}>
         {/* Header */}
-        <div className="text-center mb-5">
-          <div className="text-4xl mb-3">💝</div>
-          <p style={{ color: ex.accent, fontSize: '10px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '4px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <div style={{ fontSize: '36px', marginBottom: '12px' }}>💝</div>
+          <p style={{ color: ex.accent, fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', margin: '0 0 6px', opacity: 0.8 }}>
             Un regalo de
           </p>
-          <p className="text-white font-bold text-xl" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <p style={{ color: 'white', fontFamily: 'var(--font-playfair)', fontSize: '22px', fontWeight: 'bold', margin: '0 0 4px', textShadow: `0 0 20px ${ex.glow}` }}>
             {ex.from}
           </p>
-          <p style={{ color: ex.accent, fontSize: '10px', letterSpacing: '3px', textTransform: 'uppercase', margin: '4px 0' }}>
+          <p style={{ color: ex.accent, fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', margin: '0 0 4px', opacity: 0.8 }}>
             para
           </p>
-          <p className="font-bold text-lg" style={{ fontFamily: 'var(--font-playfair)', color: ex.accent }}>
+          <p style={{ color: ex.accent, fontFamily: 'var(--font-playfair)', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>
             {ex.to}
           </p>
         </div>
 
         {/* Contador */}
-        <div
-          className="rounded-2xl p-3 text-center mb-4"
-          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}
-        >
-          <p style={{ color: ex.accent, fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '6px' }}>
+        <div style={{
+          background: 'rgba(255,255,255,0.07)',
+          border: `1px solid ${ex.accent}30`,
+          borderRadius: '16px',
+          padding: '14px',
+          textAlign: 'center',
+          marginBottom: '16px',
+        }}>
+          <p style={{ color: ex.accent, fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', margin: '0 0 6px', opacity: 0.8 }}>
             💕 Desde el {ex.date}
           </p>
-          <p className="text-white font-bold text-3xl" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <p style={{ color: 'white', fontFamily: 'var(--font-playfair)', fontSize: '36px', fontWeight: 'bold', margin: '0 0 2px', lineHeight: 1 }}>
             {ex.days.toLocaleString('es-AR')}
           </p>
-          <p style={{ color: ex.accent, fontSize: '10px' }}>días juntos</p>
+          <p style={{ color: ex.accent, fontSize: '11px', margin: 0, opacity: 0.8 }}>días juntos</p>
         </div>
 
         {/* Foto placeholder */}
-        <div
-          className="rounded-2xl mb-4 flex items-center justify-center"
-          style={{
-            height: '100px',
-            background: `linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))`,
-            border: `1px solid ${ex.accent}30`,
-          }}
-        >
-          <span className="text-4xl opacity-30">🌹</span>
+        <div style={{
+          borderRadius: '14px',
+          marginBottom: '16px',
+          height: '90px',
+          background: `linear-gradient(135deg, ${ex.accent}15, rgba(255,255,255,0.03))`,
+          border: `1px solid ${ex.accent}20`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <span style={{ fontSize: '28px', opacity: 0.35 }}>🌹</span>
         </div>
 
         {/* Mensaje */}
-        <div
-          className="rounded-2xl p-4"
-          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}
-        >
-          <p style={{ color: ex.accent, fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>
+        <div style={{
+          background: 'rgba(255,255,255,0.06)',
+          border: `1px solid ${ex.accent}20`,
+          borderRadius: '14px',
+          padding: '14px',
+        }}>
+          <p style={{ color: ex.accent, fontSize: '8px', letterSpacing: '2px', textTransform: 'uppercase', margin: '0 0 8px', opacity: 0.8 }}>
             💌 Mensaje especial
           </p>
-          <p
-            className="text-white italic text-sm leading-relaxed"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-playfair)', fontSize: '12px', lineHeight: '1.7', fontStyle: 'italic', margin: '0 0 8px' }}>
             &ldquo;{ex.message}&rdquo;
           </p>
-          <p className="text-right mt-2 text-xs" style={{ color: ex.accent }}>— {ex.from} 💕</p>
+          <p style={{ color: ex.accent, fontSize: '10px', textAlign: 'right', margin: 0, opacity: 0.8 }}>
+            — {ex.from} 💕
+          </p>
         </div>
       </div>
     </div>
@@ -101,33 +144,70 @@ function MiniLovePage({ ex }: { ex: typeof examples[0] }) {
 
 export default function Showcase() {
   return (
-    <section className="py-20 overflow-hidden" style={{ background: 'linear-gradient(180deg, #fff5f7 0%, #ffeef3 100%)' }}>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="text-pink-400 text-sm uppercase tracking-widest mb-3">Ejemplos reales</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Así queda el <span className="gradient-text">regalo</span>
+    <section style={{ padding: '96px 0', background: 'linear-gradient(180deg, #fff5f7 0%, #fce4ec 100%)', overflow: 'hidden' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}>
+
+        {/* Título */}
+        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+          <p style={{ color: '#e91e8c', fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '12px', fontWeight: 600 }}>
+            Ejemplos reales
+          </p>
+          <h2
+            style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 'bold', margin: '0 0 16px', color: '#1a0010' }}
+          >
+            Así queda el{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #e91e8c, #ff6b9d)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              regalo
+            </span>
           </h2>
-          <p className="text-gray-500 text-lg">
-            Cada página es única. Esto es lo que ve tu pareja al abrir el link. 💕
+          <p style={{ color: '#9e6070', fontSize: '17px', margin: 0 }}>
+            Esto es exactamente lo que ve tu pareja al abrir el link. 💕
           </p>
         </div>
 
-        {/* Cards — scroll horizontal en mobile, flex en desktop */}
-        <div className="flex gap-6 overflow-x-auto pb-4 justify-start lg:justify-center" style={{ scrollbarWidth: 'none' }}>
+        {/* Cards */}
+        <div style={{
+          display: 'flex',
+          gap: '28px',
+          overflowX: 'auto',
+          paddingBottom: '24px',
+          paddingTop: '12px',
+          justifyContent: 'center',
+          scrollbarWidth: 'none',
+          alignItems: 'center',
+        }}>
           {examples.map((ex, i) => (
-            <MiniLovePage key={i} ex={ex} />
+            <ShowcaseCard key={i} ex={ex} index={i} />
           ))}
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-10">
+        <div style={{ textAlign: 'center', marginTop: '48px' }}>
           <a
             href="/crear"
-            className="inline-block gradient-love text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #e91e8c 0%, #ff6b9d 50%, #ff8fab 100%)',
+              color: 'white',
+              padding: '16px 36px',
+              borderRadius: '999px',
+              fontSize: '17px',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 8px 32px rgba(233,30,140,0.35)',
+              transition: 'opacity 0.2s',
+            }}
           >
             Crear el mío ahora ✨
           </a>
+          <p style={{ color: '#c49aaa', fontSize: '13px', marginTop: '12px' }}>
+            Lista en menos de 5 minutos · Desde $10 USD
+          </p>
         </div>
       </div>
     </section>
