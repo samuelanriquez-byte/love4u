@@ -15,7 +15,7 @@ const steps = [
     number: '03',
     emoji: '💳',
     title: 'Realizá el pago',
-    description: 'Pago seguro con tarjeta o transferencia. Proceso rápido y sin complicaciones.',
+    description: 'Pago seguro con PayPal o USDT. Proceso rápido y sin complicaciones.',
   },
   {
     number: '04',
