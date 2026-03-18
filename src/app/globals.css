@@ -40,3 +40,30 @@ body {
   50% { transform: scale(1.2); }
 }
 .pulse-heart { animation: pulse-heart 1.5s ease-in-out infinite; }
+
+@keyframes shimmer {
+  0% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+.shimmer { animation: shimmer 2s ease-in-out infinite; }
+
+@keyframes rise-in {
+  0% { opacity: 0; transform: translateY(32px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.rise-in { animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+@keyframes fade-out-up {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.96); }
+}
+.fade-out-up { animation: fade-out-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+@keyframes heart-burst {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1.1); }
+}
+.heart-burst { animation: heart-burst 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
