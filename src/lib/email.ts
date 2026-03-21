@@ -1,13 +1,8 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import QRCode from 'qrcode'
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-})
+const resend = new Resend(process.env.RESEND_API_KEY)
+const FROM = 'Love4U <onboarding@resend.dev>'
 
 interface SendConfirmationEmailParams {
   to: string
@@ -26,7 +21,9 @@ export async function sendConfirmationEmail({
   plan,
   dateIdeas,
 }: SendConfirmationEmailParams) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  if (!process.env.RESEND_API_KEY) return
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
   const pageUrl = `${baseUrl}/p/${slug}`
 
   // Generar QR como data URL
@@ -102,7 +99,7 @@ export async function sendConfirmationEmail({
       ${dateIdeasHtml}
 
       <div style="text-align: center; padding: 20px; color: #ccc; font-size: 12px;">
-        <p>¿Necesitás ayuda? Escribinos por WhatsApp o a soporte@love4u.app</p>
+        <p>¿Necesitás ayuda? Escribinos por WhatsApp</p>
         <p style="margin: 0;">Hecho con 💕 por Love4U</p>
       </div>
 
@@ -110,8 +107,8 @@ export async function sendConfirmationEmail({
     </html>
   `
 
-  await transporter.sendMail({
-    from: `Love4U 💕 <${process.env.GMAIL_USER}>`,
+  await resend.emails.send({
+    from: FROM,
     to,
     subject: `💕 Tu regalo para ${partnerName} está listo — Love4U`,
     html,

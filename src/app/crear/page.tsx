@@ -19,7 +19,7 @@ function CrearForm() {
   const [step, setStep] = useState(1)
   const [showPreview, setShowPreview] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [payMethod, setPayMethod] = useState<'paypal' | 'usdt'>('paypal')
+  const [payMethod] = useState<'paypal'>('paypal')
   const [paid, setPaid] = useState(false)
   const [savedPageId, setSavedPageId] = useState<string | null>(null)
   const [form, setForm] = useState({
@@ -354,28 +354,10 @@ function CrearForm() {
                 </div>
               </div>
 
-              {/* Selector método de pago */}
+              {/* Método de pago */}
               {!paid && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Método de pago</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => setPayMethod('paypal')}
-                      className={`py-2.5 rounded-xl border-2 text-sm font-semibold transition-all ${
-                        payMethod === 'paypal' ? 'border-blue-400 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-400'
-                      }`}
-                    >
-                      🅿️ PayPal
-                    </button>
-                    <button
-                      onClick={() => setPayMethod('usdt')}
-                      className={`py-2.5 rounded-xl border-2 text-sm font-semibold transition-all ${
-                        payMethod === 'usdt' ? 'border-green-400 bg-green-50 text-green-600' : 'border-gray-200 text-gray-400'
-                      }`}
-                    >
-                      💚 USDT (BEP20)
-                    </button>
-                  </div>
+                <div className="flex items-center gap-2 text-sm text-gray-500 justify-center">
+                  <span>🔒</span> Pago seguro con tarjeta de crédito vía PayPal
                 </div>
               )}
 
@@ -421,7 +403,7 @@ function CrearForm() {
                   {[
                     { icon: '⚡', text: 'Lista en 5 min' },
                     { icon: '🔒', text: 'Pago seguro' },
-                    { icon: '💕', text: '+10.000 parejas' },
+                    { icon: '💕', text: 'Historias reales' },
                   ].map(b => (
                     <div key={b.text} className="flex items-center gap-1.5 text-xs text-gray-500">
                       <span>{b.icon}</span>
