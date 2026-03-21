@@ -1,19 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createOrder } from '@/lib/paypal'
 import { PLANS } from '@/lib/plans'
 
-const PAYPAL_ME = 'https://paypal.me/samuelanriquez'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
 
 export async function POST(req: NextRequest) {
   try {
-    const { plan } = await req.json()
+    const { plan, pageId } = await req.json()
     const planData = PLANS[plan as keyof typeof PLANS]
 
     if (!planData) {
       return NextResponse.json({ error: 'Plan inválido' }, { status: 400 })
     }
 
-    const url = `${PAYPAL_ME}/${planData.price}USD`
-    return NextResponse.json({ url })
+    const order = await createOrder({
+      amount: planData.price,
+      description: `Love4U — Plan ${planData.name}`,
+      pageId,
+      returnUrl: `${BASE_URL}/gracias?pageId=${pageId}`,
+      cancelUrl: `${BASE_URL}/crear?plan=${plan}`,
+    })
+
+    if (!order.id) {
+      return NextResponse.json({ error: 'No se pudo crear la orden de pago.' }, { status: 400 })
+    }
+
+    const rawApprovalUrl = order.links?.find((l: any) => l.rel === 'approve')?.href
+    const approvalUrl = rawApprovalUrl ? `${rawApprovalUrl}&fundingSource=card` : null
+
+    return NextResponse.json({ approvalUrl })
   } catch (error) {
     console.error('Checkout error:', error)
     return NextResponse.json({ error: 'Error al generar el link de pago' }, { status: 500 })

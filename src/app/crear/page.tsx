@@ -64,9 +64,18 @@ function CrearForm() {
       const { pageId } = await res.json()
       setSavedPageId(pageId)
 
-      // Abrir PayPal.me o mostrar USDT
+      // Redirigir a PayPal o mostrar USDT
       if (payMethod === 'paypal') {
-        window.open(`${PAYPAL_ME}/${selectedPlan.price}USD`, '_blank')
+        const checkoutRes = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan: form.plan, pageId }),
+        })
+        const checkoutData = await checkoutRes.json()
+        if (checkoutData.approvalUrl) {
+          window.location.href = checkoutData.approvalUrl
+          return
+        }
       }
       setPaid(true)
     } catch {

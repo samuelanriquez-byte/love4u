@@ -48,6 +48,7 @@ export async function createOrder(params: {
         cancel_url: params.cancelUrl,
         brand_name: 'Love4U',
         user_action: 'PAY_NOW',
+        landing_page: 'BILLING',
       },
     }),
   })
