@@ -1,8 +1,13 @@
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import QRCode from 'qrcode'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM = 'Love4U <onboarding@resend.dev>'
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+})
 
 interface SendConfirmationEmailParams {
   to: string
@@ -21,7 +26,7 @@ export async function sendConfirmationEmail({
   plan,
   dateIdeas,
 }: SendConfirmationEmailParams) {
-  if (!process.env.RESEND_API_KEY) return
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) return
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
   const pageUrl = `${baseUrl}/p/${slug}`
@@ -107,8 +112,8 @@ export async function sendConfirmationEmail({
     </html>
   `
 
-  await resend.emails.send({
-    from: FROM,
+  await transporter.sendMail({
+    from: `Love4U 💕 <${process.env.GMAIL_USER}>`,
     to,
     subject: `💕 Tu regalo para ${partnerName} está listo — Love4U`,
     html,
