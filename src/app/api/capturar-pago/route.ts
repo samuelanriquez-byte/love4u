@@ -12,18 +12,18 @@ export async function POST(req: NextRequest) {
     const capture = await captureOrder(orderId)
 
     if (capture.status !== 'COMPLETED') {
-      return NextResponse.json({ error: 'Pago no completado', capture }, { status: 400 })
+      return NextResponse.json({ error: 'Pago no completado' }, { status: 400 })
     }
 
     // Obtener la página para saber el plan
-    const { data: page, error: pageError } = await supabaseAdmin
+    const { data: page } = await supabaseAdmin
       .from('love_pages')
       .select()
       .eq('id', pageId)
       .single()
 
     if (!page) {
-      return NextResponse.json({ error: 'Página no encontrada', pageId, pageError }, { status: 404 })
+      return NextResponse.json({ error: 'Página no encontrada' }, { status: 404 })
     }
 
     // Generar ideas de citas si es plan in-love
@@ -36,15 +36,15 @@ export async function POST(req: NextRequest) {
       .update({ paid: true, active: true, date_ideas: dateIdeas })
       .eq('id', pageId)
 
-    // Enviar email de confirmación
-    await sendConfirmationEmail({
+    // Enviar email de confirmación (no bloquea si falla)
+    sendConfirmationEmail({
       to: page.customer_email,
       personName: page.person_name,
       partnerName: page.partner_name,
       slug: page.slug,
       plan: page.plan,
       dateIdeas: page.date_ideas,
-    })
+    }).catch(err => console.error('Error enviando email:', err))
 
     return NextResponse.json({ ok: true })
   } catch (error) {
