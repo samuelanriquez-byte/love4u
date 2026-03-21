@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       dateIdeas: page.date_ideas,
     }).catch(err => console.error('Error enviando email:', err))
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, slug: page.slug })
   } catch (error) {
     console.error('Error capturando pago:', error)
     return NextResponse.json({ error: 'Error procesando el pago' }, { status: 500 })

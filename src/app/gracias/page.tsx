@@ -9,10 +9,11 @@ function GraciasContent() {
   const token = searchParams.get('token') // PayPal order ID
   const pageId = searchParams.get('pageId')
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading')
+  const [slug, setSlug] = useState<string | null>(null)
 
   useEffect(() => {
     if (!token || !pageId) {
-      setStatus('ok') // Pago USDT — ya se avisó por WhatsApp
+      setStatus('error')
       return
     }
 
@@ -22,7 +23,14 @@ function GraciasContent() {
       body: JSON.stringify({ orderId: token, pageId }),
     })
       .then(r => r.json())
-      .then(d => setStatus(d.ok ? 'ok' : 'error'))
+      .then(d => {
+        if (d.ok) {
+          setSlug(d.slug)
+          setStatus('ok')
+        } else {
+          setStatus('error')
+        }
+      })
       .catch(() => setStatus('error'))
   }, [token, pageId])
 
@@ -95,7 +103,7 @@ function GraciasContent() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <a
-            href="https://wa.me/?text=Mirá el regalo que te hice 💕"
+            href={`https://wa.me/?text=Mirá el regalo que te hice 💕 ${encodeURIComponent(`https://love4u-three.vercel.app/p/${slug}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold text-sm hover:opacity-90 transition-all"
