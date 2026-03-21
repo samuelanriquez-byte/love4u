@@ -5,8 +5,6 @@ import { PLANS } from '@/lib/plans'
 import { Upload, Music, Heart, Eye, EyeOff } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
-const USDT_WALLET = '0x839078eF6505dE73b7593C48a5C11AF59D57146A'
-const PAYPAL_ME = 'https://paypal.me/samuelanriquez'
 
 type PlanKey = keyof typeof PLANS
 
@@ -19,7 +17,6 @@ function CrearForm() {
   const [step, setStep] = useState(1)
   const [showPreview, setShowPreview] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [payMethod] = useState<'paypal'>('paypal')
   const [paid, setPaid] = useState(false)
   const [savedPageId, setSavedPageId] = useState<string | null>(null)
   const [form, setForm] = useState({
@@ -64,18 +61,16 @@ function CrearForm() {
       const { pageId } = await res.json()
       setSavedPageId(pageId)
 
-      // Redirigir a PayPal o mostrar USDT
-      if (payMethod === 'paypal') {
-        const checkoutRes = await fetch('/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: form.plan, pageId }),
-        })
-        const checkoutData = await checkoutRes.json()
-        if (checkoutData.approvalUrl) {
-          window.location.href = checkoutData.approvalUrl
-          return
-        }
+      // Redirigir a PayPal
+      const checkoutRes = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: form.plan, pageId }),
+      })
+      const checkoutData = await checkoutRes.json()
+      if (checkoutData.approvalUrl) {
+        window.location.href = checkoutData.approvalUrl
+        return
       }
       setPaid(true)
     } catch {
@@ -361,39 +356,15 @@ function CrearForm() {
                 </div>
               )}
 
-              {/* Post-pago: instrucciones */}
+              {/* Post-pago: redirigiendo a PayPal */}
               {paid && savedPageId && (
-                <div className={`rounded-2xl p-4 space-y-3 border ${payMethod === 'paypal' ? 'bg-blue-50 border-blue-200' : 'bg-green-50 border-green-200'}`}>
-                  <h3 className={`font-bold text-sm ${payMethod === 'paypal' ? 'text-blue-700' : 'text-green-700'}`}>
-                    {payMethod === 'paypal' ? '✅ ¡Se abrió PayPal!' : '✅ ¡Instrucciones de pago USDT!'}
+                <div className="rounded-2xl p-4 space-y-3 border bg-blue-50 border-blue-200">
+                  <h3 className="font-bold text-sm text-blue-700">
+                    ✅ ¡Redirigiendo a PayPal!
                   </h3>
-
-                  {payMethod === 'usdt' && (
-                    <>
-                      <p className="text-xs text-green-600">Enviá exactamente <strong>${selectedPlan.price} USDT</strong> en red <strong>BNB Smart Chain (BEP20)</strong> a:</p>
-                      <div className="bg-white rounded-xl p-3 break-all text-xs font-mono text-gray-700 select-all border border-green-200">
-                        {USDT_WALLET}
-                      </div>
-                    </>
-                  )}
-
-                  {payMethod === 'paypal' && (
-                    <p className="text-xs text-blue-600">
-                      Completá el pago de <strong>${selectedPlan.price} USD</strong> en la ventana de PayPal que se abrió.
-                    </p>
-                  )}
-
-                  <p className="text-xs text-gray-500">
-                    Una vez pagado, envianos el comprobante por WhatsApp y activamos tu página en minutos. 🚀
+                  <p className="text-xs text-blue-600">
+                    Completá el pago de <strong>${selectedPlan.price} USD</strong> en la página de PayPal.
                   </p>
-                  <a
-                    href={`https://wa.me/+542664944337?text=Hola! Hice el pago por Love4U (${payMethod === 'paypal' ? 'PayPal' : 'USDT'}). ID: ${savedPageId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full bg-[#25D366] text-white py-2.5 rounded-full text-sm font-bold text-center hover:opacity-90 transition-all"
-                  >
-                    📲 Enviar comprobante por WhatsApp
-                  </a>
                 </div>
               )}
 
