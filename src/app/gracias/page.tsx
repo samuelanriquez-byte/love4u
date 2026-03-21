@@ -103,7 +103,7 @@ function GraciasContent() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <a
-            href={`https://wa.me/?text=Mirá el regalo que te hice 💕 ${encodeURIComponent(`https://love4u-three.vercel.app/p/${slug}`)}`}
+            href={`https://wa.me/?text=${encodeURIComponent(`Mirá el regalo que te hice 💕 https://love4u-three.vercel.app/p/${slug}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold text-sm hover:opacity-90 transition-all"
