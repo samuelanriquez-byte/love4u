@@ -11,8 +11,12 @@ export async function POST(req: NextRequest) {
     // Capturar el pago en PayPal
     const capture = await captureOrder(orderId)
 
-    if (capture.status !== 'COMPLETED') {
-      return NextResponse.json({ error: 'Pago no completado' }, { status: 400 })
+    // Aceptar COMPLETED a nivel orden o a nivel capture individual
+    const captureStatus = capture.status ||
+      capture.purchase_units?.[0]?.payments?.captures?.[0]?.status
+
+    if (captureStatus !== 'COMPLETED') {
+      return NextResponse.json({ error: 'Pago no completado', captureStatus, captureName: capture.name }, { status: 400 })
     }
 
     // Obtener la página para saber el plan

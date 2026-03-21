@@ -63,6 +63,7 @@ export async function captureOrder(orderId: string) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+    cache: 'no-store',
   })
   return res.json()
 }
