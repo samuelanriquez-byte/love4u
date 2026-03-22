@@ -31,8 +31,8 @@ export async function sendConfirmationEmail({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
   const pageUrl = `${baseUrl}/p/${slug}`
 
-  // Generar QR como data URL
-  const qrDataUrl = await QRCode.toDataURL(pageUrl, {
+  // Generar QR como buffer
+  const qrBuffer = await QRCode.toBuffer(pageUrl, {
     width: 300,
     margin: 2,
     color: { dark: '#e91e8c', light: '#ffffff' },
@@ -91,7 +91,7 @@ export async function sendConfirmationEmail({
 
         <div style="text-align: center; margin-bottom: 24px;">
           <p style="color: #666; font-size: 14px; margin: 0 0 12px;">📱 O compartí este QR:</p>
-          <img src="${qrDataUrl}" alt="QR Code" style="width: 180px; height: 180px; border-radius: 12px;" />
+          <img src="cid:qrcode" alt="QR Code" style="width: 180px; height: 180px; border-radius: 12px;" />
         </div>
 
         <div style="background: #fff5f7; border-radius: 12px; padding: 16px; text-align: center;">
@@ -117,5 +117,12 @@ export async function sendConfirmationEmail({
     to,
     subject: `💕 Tu regalo para ${partnerName} está listo — Love4U`,
     html,
+    attachments: [
+      {
+        filename: 'qr.png',
+        content: qrBuffer,
+        cid: 'qrcode',
+      },
+    ],
   })
 }
