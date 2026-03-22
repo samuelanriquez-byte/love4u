@@ -40,17 +40,23 @@ export async function POST(req: NextRequest) {
       .update({ paid: true, active: true, date_ideas: dateIdeas })
       .eq('id', pageId)
 
-    // Enviar email de confirmación (no bloquea si falla)
-    sendConfirmationEmail({
-      to: page.customer_email,
-      personName: page.person_name,
-      partnerName: page.partner_name,
-      slug: page.slug,
-      plan: page.plan,
-      dateIdeas: page.date_ideas,
-    }).catch(err => console.error('Error enviando email:', err))
+    // Enviar email de confirmación
+    let emailError = null
+    try {
+      await sendConfirmationEmail({
+        to: page.customer_email,
+        personName: page.person_name,
+        partnerName: page.partner_name,
+        slug: page.slug,
+        plan: page.plan,
+        dateIdeas: page.date_ideas,
+      })
+    } catch (err: any) {
+      emailError = err?.message || String(err)
+      console.error('Error enviando email:', emailError)
+    }
 
-    return NextResponse.json({ ok: true, slug: page.slug })
+    return NextResponse.json({ ok: true, slug: page.slug, emailError })
   } catch (error) {
     console.error('Error capturando pago:', error)
     return NextResponse.json({ error: 'Error procesando el pago' }, { status: 500 })
