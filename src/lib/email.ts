@@ -90,6 +90,9 @@ export async function sendConfirmationEmail({
         </div>
 
         <div style="text-align: center; margin-bottom: 24px;">
+          <a href="${pageUrl}" style="display:inline-block;background:linear-gradient(135deg,#e91e8c,#ff6b9d);color:white;padding:14px 32px;border-radius:999px;font-size:16px;font-weight:bold;text-decoration:none;margin-bottom:20px;">
+            💝 Ver mi regalo
+          </a>
           <p style="color: #666; font-size: 14px; margin: 0 0 12px;">📱 O compartí este QR:</p>
           <img src="cid:qrcode" alt="QR Code" style="width: 180px; height: 180px; border-radius: 12px;" />
         </div>

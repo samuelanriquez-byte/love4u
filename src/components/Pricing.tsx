@@ -33,6 +33,44 @@ export default function Pricing() {
           </p>
         </div>
 
+        {/* Tabla comparativa */}
+        <div className="overflow-x-auto mb-12">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr>
+                <th className="text-left py-3 px-4 text-gray-400 font-medium">Característica</th>
+                {(Object.entries(PLANS) as [keyof typeof PLANS, typeof PLANS[keyof typeof PLANS]][]).map(([key, plan]) => (
+                  <th key={key} className={`py-3 px-4 text-center font-bold ${key === 'premium' ? 'text-pink-500' : 'text-gray-600'}`}>
+                    {planEmojis[key]} {plan.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { label: 'Fotos', values: ['3 fotos', '7 fotos', '7 fotos'] },
+                { label: 'Duración', values: ['1 año', 'De por vida', 'De por vida'] },
+                { label: 'Contador en vivo', values: [true, true, true] },
+                { label: 'QR exclusivo', values: [true, true, true] },
+                { label: 'Playlist de Spotify', values: [false, true, true] },
+                { label: 'Ideas de citas románticas', values: [false, false, true] },
+              ].map((row, i) => (
+                <tr key={i} className={i % 2 === 0 ? 'bg-pink-50/50' : 'bg-white'}>
+                  <td className="py-3 px-4 text-gray-600">{row.label}</td>
+                  {row.values.map((v, j) => (
+                    <td key={j} className="py-3 px-4 text-center">
+                      {typeof v === 'boolean'
+                        ? v ? <span className="text-pink-500 font-bold">✓</span> : <span className="text-gray-300">—</span>
+                        : <span className="text-gray-700 font-medium">{v}</span>
+                      }
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         <div className="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8">
           {(Object.entries(PLANS) as [keyof typeof PLANS, typeof PLANS[keyof typeof PLANS]][]).map(([key, plan]) => (
             <div

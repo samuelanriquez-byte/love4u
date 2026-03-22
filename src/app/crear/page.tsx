@@ -1,8 +1,8 @@
 'use client'
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PLANS } from '@/lib/plans'
-import { Upload, Music, Heart, Eye, EyeOff } from 'lucide-react'
+import { Upload, Music, Eye, EyeOff } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
 
@@ -15,10 +15,39 @@ function CrearForm() {
   const initialPlan = (searchParams.get('plan') as PlanKey) || 'basic'
 
   const [step, setStep] = useState(1)
+  const [stepDir, setStepDir] = useState<'forward' | 'back'>('forward')
   const [showPreview, setShowPreview] = useState(false)
   const [loading, setLoading] = useState(false)
   const [paid, setPaid] = useState(false)
   const [savedPageId, setSavedPageId] = useState<string | null>(null)
+
+  // Temporizador: 15 minutos desde que empieza el paso 2
+  const [timeLeft, setTimeLeft] = useState<number | null>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  function goToStep2() {
+    setStepDir('forward')
+    setStep(2)
+    setTimeLeft(15 * 60)
+  }
+
+  function goToStep1() {
+    setStepDir('back')
+    setStep(1)
+    setTimeLeft(null)
+    if (timerRef.current) clearInterval(timerRef.current)
+  }
+
+  useEffect(() => {
+    if (timeLeft === null) return
+    if (timeLeft <= 0) return
+    timerRef.current = setInterval(() => setTimeLeft(t => (t !== null ? t - 1 : null)), 1000)
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [timeLeft === null ? null : Math.floor(timeLeft / 60)])  // reinicia solo si cambia minuto
+
+  const timerMinutes = timeLeft !== null ? Math.floor(timeLeft / 60) : null
+  const timerSeconds = timeLeft !== null ? timeLeft % 60 : null
+  const timerUrgent = timeLeft !== null && timeLeft <= 120
   const [form, setForm] = useState({
     plan: initialPlan,
     person_name: '',
@@ -113,7 +142,7 @@ function CrearForm() {
 
           {/* PASO 1: Datos + plan */}
           {step === 1 && (
-            <div className="space-y-5">
+            <div className={`space-y-5 ${stepDir === 'back' ? 'slide-in-left' : 'slide-in-right'}`}>
               <h2 className="text-xl font-bold text-center" style={{ fontFamily: 'var(--font-playfair)' }}>
                 Personalizá tu regalo ✍️
               </h2>
@@ -234,7 +263,7 @@ function CrearForm() {
               )}
 
               <button
-                onClick={() => setStep(2)}
+                onClick={goToStep2}
                 disabled={!isStep1Valid}
                 className="w-full gradient-love text-white py-3 rounded-full font-semibold hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
@@ -245,10 +274,24 @@ function CrearForm() {
 
           {/* PASO 2: Email + resumen + pago */}
           {step === 2 && (
-            <div className="space-y-5">
-              <h2 className="text-xl font-bold text-center" style={{ fontFamily: 'var(--font-playfair)' }}>
-                ¡Casi listo! 🎁
-              </h2>
+            <div className="space-y-5 slide-in-right">
+              <div className="flex items-center justify-between">
+                <button onClick={goToStep1} className="text-sm text-gray-400 hover:text-pink-500 transition-colors">
+                  ← Volver
+                </button>
+                <h2 className="text-xl font-bold text-center" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  ¡Casi listo! 🎁
+                </h2>
+                <div className="w-12" />
+              </div>
+
+              {/* Temporizador */}
+              {timeLeft !== null && timeLeft > 0 && (
+                <div className={`flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-semibold ${timerUrgent ? 'bg-red-50 text-red-500 border border-red-200' : 'bg-pink-50 text-pink-500 border border-pink-200'}`}>
+                  <span>⏱</span>
+                  <span>Tu página reservada por {timerMinutes}:{String(timerSeconds).padStart(2, '0')} min</span>
+                </div>
+              )}
 
               {/* Botón preview */}
               <button

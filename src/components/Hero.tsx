@@ -1,4 +1,6 @@
+'use client'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 function PhoneMockup() {
   return (
@@ -162,6 +164,12 @@ function PhoneMockup() {
 }
 
 export default function Hero() {
+  const [todayCount, setTodayCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/stats').then(r => r.json()).then(d => setTodayCount(d.today)).catch(() => {})
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Fondo decorativo */}
@@ -221,10 +229,18 @@ export default function Hero() {
                 <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>3</p>
                 <p className="text-sm text-gray-500">planes disponibles</p>
               </div>
-              <div>
-                <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>∞</p>
-                <p className="text-sm text-gray-500">amor garantizado</p>
-              </div>
+              {todayCount !== null && todayCount > 0 && (
+                <div>
+                  <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>{todayCount}</p>
+                  <p className="text-sm text-gray-500">regalos hoy 💕</p>
+                </div>
+              )}
+              {(todayCount === null || todayCount === 0) && (
+                <div>
+                  <p className="text-3xl font-bold gradient-text" style={{ fontFamily: 'var(--font-playfair)' }}>∞</p>
+                  <p className="text-sm text-gray-500">amor garantizado</p>
+                </div>
+              )}
             </div>
 
             {/* Testimoniales */}
