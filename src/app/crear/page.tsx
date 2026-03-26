@@ -2,7 +2,7 @@
 import { useState, Suspense, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PLANS } from '@/lib/plans'
-import { Upload, Music, Eye, EyeOff } from 'lucide-react'
+import { Upload, Music, Eye, EyeOff, Heart } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
 
