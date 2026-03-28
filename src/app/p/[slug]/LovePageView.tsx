@@ -352,7 +352,7 @@ export default function LovePageView({ page }: { page: LovePage }) {
             </div>
           </div>
 
-          {/* PLAYLIST */}
+          {/* CANCIÓN */}
           {page.playlist_url && (
             <div style={{
               marginBottom: '24px',
@@ -360,12 +360,12 @@ export default function LovePageView({ page }: { page: LovePage }) {
               transition: 'opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s',
             }}>
               <p style={{ color: '#ff8fab', fontSize: '9px', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center', opacity: 0.8 }}>
-                🎵 Nuestra playlist
+                🎵 Nuestra canción
               </p>
               <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <iframe
-                  src={page.playlist_url.replace('spotify.com/', 'spotify.com/embed/')}
-                  width="100%" height="152"
+                  src={page.playlist_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/')}
+                  width="100%" height="200"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                   style={{ border: 'none', display: 'block' }}

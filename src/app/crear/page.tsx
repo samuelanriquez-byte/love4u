@@ -250,13 +250,13 @@ function CrearForm() {
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-1">
                     <Music className="inline w-4 h-4 mr-1" />
-                    Playlist de Spotify (opcional)
+                    Su canción (YouTube, opcional)
                   </label>
                   <input
                     name="playlist_url"
                     value={form.playlist_url}
                     onChange={handleChange}
-                    placeholder="https://open.spotify.com/playlist/..."
+                    placeholder="https://www.youtube.com/watch?v=..."
                     className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all"
                   />
                 </div>

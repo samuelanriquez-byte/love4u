@@ -13,7 +13,7 @@ export const PLANS = {
     priceEur: 14,
     photos: 7,
     duration: 'De por vida',
-    features: ['Hasta 7 fotos', 'Mensaje personalizado', 'Fecha de inicio', 'Link + QR exclusivo', 'Playlist de Spotify', 'Válido de por vida'],
+    features: ['Hasta 7 fotos', 'Mensaje personalizado', 'Fecha de inicio', 'Link + QR exclusivo', 'Su canción de YouTube', 'Válido de por vida'],
   },
   inlove: {
     name: 'In-Love',
@@ -21,6 +21,6 @@ export const PLANS = {
     priceEur: 16,
     photos: 7,
     duration: 'De por vida',
-    features: ['Hasta 7 fotos', 'Mensaje personalizado', 'Fecha de inicio', 'Link + QR exclusivo', 'Playlist de Spotify', '3 ideas de citas románticas', 'Válido de por vida'],
+    features: ['Hasta 7 fotos', 'Mensaje personalizado', 'Fecha de inicio', 'Link + QR exclusivo', 'Su canción de YouTube', '3 ideas de citas románticas', 'Válido de por vida'],
   },
 } as const
