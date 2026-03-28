@@ -96,6 +96,7 @@ export default function Pricing() {
                     ${plan.price}
                   </span>
                   <span className="text-gray-400 ml-1">USD</span>
+                  <p className="text-gray-400 text-sm mt-1">{(plan as any).priceEur}€ EUR</p>
                 </div>
               </div>
 

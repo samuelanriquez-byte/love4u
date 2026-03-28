@@ -162,7 +162,7 @@ function CrearForm() {
                       }`}
                     >
                       {planEmojis[key]} {plan.name}
-                      <div className="font-bold text-sm mt-0.5">${plan.price}</div>
+                      <div className="font-bold text-sm mt-0.5">${plan.price} · {(plan as any).priceEur}€</div>
                     </button>
                   ))}
                 </div>
@@ -387,7 +387,7 @@ function CrearForm() {
                   )}
                   <div className="border-t border-pink-200 pt-2 flex justify-between">
                     <span className="font-bold">Total</span>
-                    <span className="font-bold gradient-text text-base">${selectedPlan.price} USD</span>
+                    <span className="font-bold gradient-text text-base">${selectedPlan.price} USD · {(selectedPlan as any).priceEur}€</span>
                   </div>
                 </div>
               </div>
