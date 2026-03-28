@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = `💕 ${data.person_name} te tiene un regalo especial`
   const description = `Abrí para ver el regalo que ${data.person_name} preparó para vos. Solo para vos. 💌`
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.love4u.app'
 
   return {
     title,

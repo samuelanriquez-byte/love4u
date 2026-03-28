@@ -110,7 +110,7 @@ function CrearForm() {
   }
 
   const isStep1Valid = !!(form.person_name && form.partner_name && form.start_date && form.message && form.photos.length > 0)
-  const isStep2Valid = !!(form.customer_email && form.customer_email.includes('@'))
+  const isStep2Valid = !!(form.customer_email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.customer_email))
 
   return (
     <div className="min-h-screen pt-24 pb-12 px-4" style={{ background: 'linear-gradient(135deg, #fff5f7 0%, #fff0f3 100%)' }}>

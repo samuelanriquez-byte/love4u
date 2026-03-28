@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
+import Script from 'next/script'
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
@@ -22,10 +23,10 @@ export const metadata: Metadata = {
     title: 'Love4U — Regalos digitales para enamorados',
     description: 'El regalo más especial que puedes darle a tu pareja. Con fotos, música y un mensaje único. 💕',
     type: 'website',
-    url: 'https://love4u-three.vercel.app',
+    url: 'https://www.love4u.app',
     images: [
       {
-        url: 'https://love4u-three.vercel.app/api/og',
+        url: 'https://www.love4u.app/api/og',
         width: 1200,
         height: 630,
         alt: 'Love4U — Regalos digitales para enamorados',
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Love4U — Regalos digitales para enamorados',
     description: 'El regalo más especial que puedes darle a tu pareja.',
-    images: ['https://love4u-three.vercel.app/api/og'],
+    images: ['https://www.love4u.app/api/og'],
   },
 }
 
@@ -47,6 +48,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-14272359414" />
+        <Script id="ga-init" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-14272359414');
+        `}</Script>
+      </head>
       <body className={`${playfair.variable} ${lato.variable} antialiased`} style={{ fontFamily: 'var(--font-lato), sans-serif' }}>
         <Toaster position="top-center" />
         {children}

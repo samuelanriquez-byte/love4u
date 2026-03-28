@@ -20,8 +20,8 @@ const faqs = [
     answer: 'La página tiene nuestro logo discretamente. Si querés una versión sin marca, contactanos.',
   },
   {
-    question: '¿Qué es la playlist del plan Premium?',
-    answer: 'Podés incluir el link de una playlist de Spotify que se reproducirá en la página. La persona que la recibe puede escucharla mientras ve las fotos.',
+    question: '¿Qué es la canción del plan Premium?',
+    answer: 'Podés incluir el link de un video de YouTube — su canción favorita, la que los representa, o cualquier tema especial. Se reproduce directamente en la página.',
   },
   {
     question: '¿Cuáles son las 3 ideas de citas del plan In-Love?',
@@ -29,11 +29,11 @@ const faqs = [
   },
   {
     question: '¿Los pagos son seguros?',
-    answer: 'Sí. Usamos PayPal, una de las plataformas de pago más seguras del mundo. También aceptamos USDT (criptomoneda) vía BNB Smart Chain.',
+    answer: 'Sí. Usamos PayPal, una de las plataformas de pago más seguras del mundo. Podés pagar con tarjeta de crédito, débito o saldo PayPal.',
   },
   {
     question: '¿Qué formas de pago aceptan?',
-    answer: 'Aceptamos PayPal (con tarjeta o saldo PayPal) y USDT en red BNB Smart Chain (BEP20). Ambos métodos son rápidos y seguros.',
+    answer: 'Aceptamos PayPal (con tarjeta de crédito, débito o saldo PayPal). El proceso es rápido, seguro y sin complicaciones.',
   },
 ]
 

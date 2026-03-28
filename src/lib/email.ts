@@ -28,7 +28,7 @@ export async function sendConfirmationEmail({
 }: SendConfirmationEmailParams) {
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) return
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.love4u.app'
   const pageUrl = `${baseUrl}/p/${slug}`
 
   // Generar QR como buffer

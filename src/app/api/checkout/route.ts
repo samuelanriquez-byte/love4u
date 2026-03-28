@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createOrder } from '@/lib/paypal'
 import { PLANS } from '@/lib/plans'
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://love4u-three.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.love4u.app'
 
 export async function POST(req: NextRequest) {
   try {

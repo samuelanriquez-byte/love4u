@@ -52,7 +52,7 @@ export default function Pricing() {
                 { label: 'Duración', values: ['1 año', 'De por vida', 'De por vida'] },
                 { label: 'Contador en vivo', values: [true, true, true] },
                 { label: 'QR exclusivo', values: [true, true, true] },
-                { label: 'Playlist de Spotify', values: [false, true, true] },
+                { label: 'Canción de YouTube', values: [false, true, true] },
                 { label: 'Ideas de citas románticas', values: [false, false, true] },
               ].map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? 'bg-pink-50/50' : 'bg-white'}>
