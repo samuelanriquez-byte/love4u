@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     })
 
     if (!order.id) {
+      console.error('PayPal order error:', JSON.stringify(order))
       return NextResponse.json({ error: 'No se pudo crear la orden de pago.' }, { status: 400 })
     }
 
