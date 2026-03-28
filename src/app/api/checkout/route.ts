@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
       amount: planData.price,
       description: `Love4U — Plan ${planData.name}`,
       pageId,
-      returnUrl: `${BASE_URL}/gracias?pageId=${pageId}`,
-      cancelUrl: `${BASE_URL}/crear?plan=${plan}`,
+      returnUrl: `${BASE_URL}/gracias/${pageId}`,
+      cancelUrl: `${BASE_URL}/crear`,
     })
 
     if (!order.id) {
