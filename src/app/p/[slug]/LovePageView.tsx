@@ -364,7 +364,11 @@ export default function LovePageView({ page }: { page: LovePage }) {
               </p>
               <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <iframe
-                  src={page.playlist_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/')}
+                  src={(() => {
+                    const url = page.playlist_url
+                    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+                    return match ? `https://www.youtube.com/embed/${match[1]}` : ''
+                  })()}
                   width="100%" height="200"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
