@@ -14,64 +14,39 @@ interface PageRow {
   expires_at: string | null
 }
 
-const PLAN_LABEL: Record<string, string> = {
-  basic: 'Básico',
-  premium: 'Premium',
-  inlove: 'In-Love',
-}
-
-const PLAN_COLOR: Record<string, string> = {
-  basic: '#6b7280',
-  premium: '#8b5cf6',
-  inlove: '#e91e8c',
-}
-
 export default function AdminPage() {
   const [secret, setSecret] = useState('')
   const [input, setInput] = useState('')
   const [pages, setPages] = useState<PageRow[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [activating, setActivating] = useState<string | null>(null)
-  const [message, setMessage] = useState('')
+
+  async function fetchPages(s: string) {
+    const res = await fetch('/api/admin/pages', {
+      headers: { Authorization: `Bearer ${s}` },
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.pages as PageRow[]
+  }
 
   async function login() {
     setLoading(true)
     setError('')
-    const res = await fetch(`/api/admin/pages?secret=${input}`)
-    if (!res.ok) {
+    const result = await fetchPages(input)
+    if (!result) {
       setError('Contraseña incorrecta.')
       setLoading(false)
       return
     }
-    const data = await res.json()
-    setPages(data.pages)
+    setPages(result)
     setSecret(input)
     setLoading(false)
   }
 
   async function refresh() {
-    const res = await fetch(`/api/admin/pages?secret=${secret}`)
-    const data = await res.json()
-    setPages(data.pages)
-  }
-
-  async function activateUSDT(pageId: string) {
-    setActivating(pageId)
-    setMessage('')
-    const res = await fetch('/api/confirmar-usdt', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pageId, adminSecret: secret }),
-    })
-    const data = await res.json()
-    if (data.ok) {
-      setMessage('✅ Página activada y email enviado.')
-      await refresh()
-    } else {
-      setMessage('❌ Error al activar: ' + (data.error || 'desconocido'))
-    }
-    setActivating(null)
+    const result = await fetchPages(secret)
+    if (result) setPages(result)
   }
 
   if (!secret) {
@@ -103,7 +78,6 @@ export default function AdminPage() {
 
   const pending = pages.filter(p => !p.paid)
   const active = pages.filter(p => p.paid && p.active)
-  const inactive = pages.filter(p => p.paid && !p.active)
 
   return (
     <div className="min-h-screen bg-gray-950 text-white p-6">
@@ -117,10 +91,6 @@ export default function AdminPage() {
             ↻ Actualizar
           </button>
         </div>
-
-        {message && (
-          <div className="mb-6 p-4 rounded-xl bg-gray-900 border border-gray-700 text-sm">{message}</div>
-        )}
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
@@ -136,14 +106,12 @@ export default function AdminPage() {
           ))}
         </div>
 
-        {/* Pendientes USDT */}
+        {/* Pendientes */}
         {pending.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-4 text-yellow-400">⏳ Pendientes de activación</h2>
+            <h2 className="text-lg font-semibold mb-4 text-yellow-400">⏳ Pendientes de pago</h2>
             <div className="space-y-3">
-              {pending.map(p => (
-                <PageCard key={p.id} page={p} onActivate={() => activateUSDT(p.id)} activating={activating === p.id} />
-              ))}
+              {pending.map(p => <PageCard key={p.id} page={p} />)}
             </div>
           </div>
         )}
@@ -155,9 +123,7 @@ export default function AdminPage() {
             <p className="text-gray-600 text-sm">No hay páginas activas aún.</p>
           ) : (
             <div className="space-y-3">
-              {active.map(p => (
-                <PageCard key={p.id} page={p} onActivate={() => {}} activating={false} />
-              ))}
+              {active.map(p => <PageCard key={p.id} page={p} />)}
             </div>
           )}
         </div>
@@ -166,15 +132,7 @@ export default function AdminPage() {
   )
 }
 
-function PageCard({
-  page,
-  onActivate,
-  activating,
-}: {
-  page: PageRow
-  onActivate: () => void
-  activating: boolean
-}) {
+function PageCard({ page }: { page: PageRow }) {
   const PLAN_LABEL: Record<string, string> = { basic: 'Básico', premium: 'Premium', inlove: 'In-Love' }
   const PLAN_COLOR: Record<string, string> = { basic: '#6b7280', premium: '#8b5cf6', inlove: '#e91e8c' }
 
@@ -208,27 +166,15 @@ function PageCard({
           {page.expires_at && ` · Vence: ${new Date(page.expires_at).toLocaleDateString('es-AR')}`}
         </p>
       </div>
-      <div className="flex items-center gap-3 flex-shrink-0">
-        {page.paid && (
-          <a
-            href={`/p/${page.slug}`}
-            target="_blank"
-            className="text-sm text-pink-400 hover:text-pink-300 border border-pink-900 px-3 py-1.5 rounded-lg transition-colors"
-          >
-            Ver página
-          </a>
-        )}
-        {!page.paid && (
-          <button
-            onClick={onActivate}
-            disabled={activating}
-            className="text-sm text-white px-4 py-1.5 rounded-lg font-semibold transition-all"
-            style={{ background: activating ? '#6b7280' : 'linear-gradient(135deg, #e91e8c, #ff6b9d)' }}
-          >
-            {activating ? 'Activando...' : 'Activar USDT'}
-          </button>
-        )}
-      </div>
+      {page.paid && (
+        <a
+          href={`/p/${page.slug}`}
+          target="_blank"
+          className="text-sm text-pink-400 hover:text-pink-300 border border-pink-900 px-3 py-1.5 rounded-lg transition-colors flex-shrink-0"
+        >
+          Ver página
+        </a>
+      )}
     </div>
   )
 }
