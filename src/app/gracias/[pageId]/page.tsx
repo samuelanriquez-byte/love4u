@@ -125,12 +125,13 @@ function GraciasContent({ pageId }: { pageId: string }) {
   )
 }
 
-export default function GraciasPage({ params }: { params: { pageId: string } }) {
+export default async function GraciasPage({ params }: { params: Promise<{ pageId: string }> }) {
+  const { pageId } = await params
   return (
     <>
       <Navbar />
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Cargando...</div>}>
-        <GraciasContent pageId={params.pageId} />
+        <GraciasContent pageId={pageId} />
       </Suspense>
     </>
   )
