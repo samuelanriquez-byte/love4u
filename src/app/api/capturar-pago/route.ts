@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
 
     // Capturar el pago en PayPal
     const capture = await captureOrder(orderId)
+        console.log('PayPal capture response:', JSON.stringify(capture))
 
     // Aceptar COMPLETED a nivel orden o a nivel capture individual
     const captureStatus = capture.status ||
