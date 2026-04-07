@@ -20,7 +20,7 @@ export default function Footer() {
 
         <div className="flex justify-center gap-4 mb-6">
           <a
-            href="https://instagram.com/love4u"
+            href="https://www.instagram.com/love4u.ok/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 gradient-love rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
@@ -31,7 +31,7 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="https://tiktok.com/@love4u"
+            href="https://www.tiktok.com/@love4u151"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 gradient-love rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
